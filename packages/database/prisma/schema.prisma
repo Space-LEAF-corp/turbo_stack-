@@ -11,12 +11,29 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String    // Hashed password
   name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role      String    @default("user") // user, admin, captain
+  avatar    String?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   progress  Progress[]
+  sessions  Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
 }
 
 model Course {
@@ -41,4 +58,13 @@ model Progress {
   course     Course   @relation(fields: [courseId], references: [id])
   
   @@unique([userId, courseId])
+}
+
+model LogEntry {
+  id        String   @id @default(cuid())
+  content   String
+  stardate  String?
+  captain   String   @default("Jean-Luc Picard")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,0 +1,29 @@
+replicaCount: 2
+
+image:
+  repository: turbo-stack-frontend
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: NodePort
+  port: 3000
+  targetPort: 3000
+  nodePort: 30000
+
+ingress:
+  enabled: false
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+env:
+  - name: NODE_ENV
+    value: "production"
+  - name: NEXT_PUBLIC_API_URL
+    value: "http://backend:3001"

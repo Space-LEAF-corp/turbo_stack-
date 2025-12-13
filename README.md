@@ -160,6 +160,32 @@ docker-compose down
 docker-compose logs -f
 ```
 
+## ☸️ Kubernetes Deployment
+
+Deploy to Minikube with Helm charts:
+
+```bash
+# Install tools (if needed)
+./install-k8s-tools.sh
+
+# Deploy everything
+./deploy-minikube.sh
+
+# Or follow detailed guide
+# See KUBERNETES_DEPLOY.md
+```
+
+**Helm Charts Included:**
+- `helm/frontend/` - Next.js frontend deployment
+- `helm/backend/` - Express API backend deployment
+
+**Features:**
+- 🎭 2 replicas per service for high availability
+- 📊 Health checks and readiness probes
+- 🌐 NodePort services (frontend: 30000, backend: 30001)
+- 🔄 Auto-scaling ready
+- 📈 Resource limits and requests
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
