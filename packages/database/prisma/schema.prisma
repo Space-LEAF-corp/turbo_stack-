@@ -11,15 +11,10 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  password  String    // Hashed password
-  name      String?
-  role      String    @default("user") // user, admin, captain
-  avatar    String?
-  isActive  Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
   progress  Progress[]
   sessions  Session[]
 }

@@ -12,7 +12,6 @@ router.post(
   [
     body('email').isEmail().normalizeEmail(),
     body('password').isLength({ min: 6 }),
-    body('name').optional().trim(),
   ],
   async (req: Request, res: Response) => {
     try {
@@ -21,7 +20,7 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { email, password, name } = req.body;
+      const { email, password } = req.body;
 
       // Check if user exists
       const existingUser = await prisma.user.findUnique({
@@ -40,14 +39,10 @@ router.post(
         data: {
           email,
           password: hashedPassword,
-          name: name || null,
-          role: 'user',
         },
         select: {
           id: true,
           email: true,
-          name: true,
-          role: true,
           createdAt: true,
         },
       });
@@ -102,10 +97,6 @@ router.post(
 
       if (!user) {
         return res.status(401).json({ error: 'Invalid credentials' });
-      }
-
-      if (!user.isActive) {
-        return res.status(401).json({ error: 'Account is inactive' });
       }
 
       // Verify password
@@ -167,12 +158,7 @@ router.get('/me', authMiddleware, async (req: AuthRequest, res: Response) => {
       select: {
         id: true,
         email: true,
-        name: true,
-        role: true,
-        avatar: true,
-        isActive: true,
         createdAt: true,
-        updatedAt: true,
       },
     });
 
@@ -222,32 +208,26 @@ router.post('/logout-all', authMiddleware, async (req: AuthRequest, res: Respons
   }
 });
 
-// Update profile
-router.patch('/profile', authMiddleware, async (req: AuthRequest, res: Response) => {
+// Get profile (no updates needed with simplified model)
+router.get('/profile', authMiddleware, async (req: AuthRequest, res: Response) => {
   try {
-    const { name, avatar } = req.body;
-
-    const user = await prisma.user.update({
+    const user = await prisma.user.findUnique({
       where: { id: req.userId },
-      data: {
-        ...(name !== undefined && { name }),
-        ...(avatar !== undefined && { avatar }),
-      },
       select: {
         id: true,
         email: true,
-        name: true,
-        role: true,
-        avatar: true,
         createdAt: true,
-        updatedAt: true,
       },
     });
 
-    res.json({ message: 'Profile updated', user });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ user });
   } catch (error) {
-    console.error('Update profile error:', error);
-    res.status(500).json({ error: 'Failed to update profile' });
+    console.error('Get profile error:', error);
+    res.status(500).json({ error: 'Failed to get profile' });
   }
 });
 
