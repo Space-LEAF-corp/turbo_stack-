@@ -1,7 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { prisma } from '@turbo-stack/database';
 import authRoutes from './routes/auth';
 
 dotenv.config();
@@ -26,28 +25,11 @@ app.get('/api/health', (req: Request, res: Response) => {
 });
 
 app.get('/api/hello', async (req: Request, res: Response) => {
-  try {
-    // Fetch the latest log entry from database
-    const logEntry = await prisma.logEntry.findFirst({
-      orderBy: { createdAt: 'desc' },
-    });
-
-    res.json({
-      message: 'Backend alive',
-      timestamp: new Date().toISOString(),
-      logEntry: logEntry,
-      databaseConnected: true,
-    });
-  } catch (error) {
-    console.error('Database error:', error);
-    res.json({
-      message: 'Backend alive',
-      timestamp: new Date().toISOString(),
-      logEntry: null,
-      databaseConnected: false,
-      error: 'Database not configured. Run: docker-compose up -d && pnpm db:setup',
-    });
-  }
+  res.json({
+    message: 'Backend alive',
+    timestamp: new Date().toISOString(),
+    note: 'In-memory auth (no database required)',
+  });
 });
 
 app.get('/api/learn', (req: Request, res: Response) => {
