@@ -1,6 +1,6 @@
 export type Limits = {
   I_max: number; // A
-n  V_max: number; // V
+  V_max: number; // V
   n_e_max: number; // m^-3
   T_max: number; // K
 };

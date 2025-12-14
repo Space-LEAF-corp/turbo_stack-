@@ -3,19 +3,13 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <main 
-      className="flex min-h-screen flex-col items-center justify-center p-24 relative"
-      style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?q=80&w=2071&auto=format&fit=crop')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
+      className="flex min-h-screen flex-col items-center justify-center p-24 relative bg-cover bg-center bg-no-repeat bg-[url('https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?q=80&w=2071&auto=format&fit=crop')]"
     >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
       
       <div className="text-center relative z-10">
-        <h1 className="text-6xl font-bold mb-4 tracking-wider" style={{ color: '#2dd4bf' }}>
+        <h1 className="text-6xl font-bold mb-4 tracking-wider text-[#2dd4bf]">
           SPACE LEAF CORP
         </h1>
         <p className="text-xl text-gray-200 mb-8">
