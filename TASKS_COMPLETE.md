@@ -4,13 +4,13 @@
 
 ### What's Working
 
-1. **Backend API** (http://localhost:3001)
+1. **Backend API** (<http://localhost:3001>)
    - ✅ `/api/health` - Health check endpoint
    - ✅ `/api/auth/signup` - User registration with bcrypt password hashing
    - ✅ `/api/auth/login` - User login with credential validation
    - ✅ In-memory user storage (no database required)
 
-2. **Frontend** (http://localhost:3001 - Next.js)
+2. **Frontend** (<http://localhost:3001> - Next.js)
    - ✅ Home page with Sign In and Create Account buttons
    - ✅ `/login` - Login page with simple form
    - ✅ `/signup` - Signup page with simple form
@@ -24,20 +24,24 @@
 ## How to Use
 
 ### 1. Servers are Running
+
 Both servers are already running in the background:
-- Backend: http://localhost:3001 (Express API)
-- Frontend: http://localhost:3001 (Next.js - port auto-adjusted)
+
+- Backend: <http://localhost:3001> (Express API)
+- Frontend: <http://localhost:3001> (Next.js - port auto-adjusted)
 
 ### 2. Test the Flow
 
 **Via Browser:**
-1. Open http://localhost:3001 in your browser
+
+1. Open <http://localhost:3001> in your browser
 2. Click "Create Account"
 3. Enter email and password
 4. Click "Sign Up" - you'll see a success alert
 5. Try logging in with those credentials
 
 **Via cURL:**
+
 ```bash
 # Sign up
 curl -X POST http://localhost:3001/api/auth/signup \
@@ -53,7 +57,8 @@ curl -X POST http://localhost:3001/api/auth/login \
 ## Architecture
 
 ### Backend (apps/api)
-```
+
+```text
 src/
 ├── index.ts          # Express server setup
 └── routes/
@@ -61,7 +66,8 @@ src/
 ```
 
 ### Frontend (apps/web)
-```
+
+```text
 src/app/
 ├── page.tsx          # Home page
 ├── login/

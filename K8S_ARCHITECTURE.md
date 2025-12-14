@@ -2,7 +2,7 @@
 
 ## Deployment Overview
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                      Minikube Cluster                        │
 │                                                              │
@@ -59,6 +59,7 @@
 ## Resource Specifications
 
 ### Frontend Deployment
+
 - **Replicas**: 2
 - **Image**: `turbo-stack-frontend:latest`
 - **Port**: 3000
@@ -67,6 +68,7 @@
 - **Health Checks**: HTTP GET / on port 3000
 
 ### Backend Deployment
+
 - **Replicas**: 2
 - **Image**: `turbo-stack-backend:latest`
 - **Port**: 3001
@@ -77,12 +79,14 @@
 ## Service Exposure
 
 ### Frontend Service
+
 - **Type**: NodePort
 - **Port**: 3000
 - **NodePort**: 30000
 - **Access**: `minikube service frontend --url`
 
 ### Backend Service
+
 - **Type**: NodePort
 - **Port**: 3001
 - **NodePort**: 30001
@@ -90,7 +94,7 @@
 
 ## Helm Chart Structure
 
-```
+```text
 helm/
 ├── frontend/
 │   ├── Chart.yaml              # Chart metadata
@@ -127,7 +131,7 @@ helm/
 
 ## Deployment Flow
 
-```
+```text
 1. Install Prerequisites
    └── minikube, helm, kubectl
 
@@ -160,7 +164,7 @@ helm/
 
 ## Pod Lifecycle
 
-```
+```text
 Pending → ContainerCreating → Running
            ↓                    ↓
     ImagePullBackOff      Ready (✓)
@@ -171,6 +175,7 @@ Pending → ContainerCreating → Running
 ## Service Discovery
 
 Within the cluster, services communicate using DNS:
+
 - Frontend can reach backend at: `http://backend:3001`
 - Backend can reach frontend at: `http://frontend:3000`
 
@@ -190,12 +195,14 @@ kubectl autoscale deployment frontend --cpu-percent=50 --min=2 --max=10
 ## Health Checks
 
 ### Liveness Probe
+
 - Checks if container is alive
 - Restarts container if check fails
 - Initial delay: 30s
 - Period: 10s
 
 ### Readiness Probe
+
 - Checks if container is ready to serve traffic
 - Removes from service endpoints if check fails
 - Initial delay: 10s
@@ -215,7 +222,7 @@ resources:
 
 ## Network Topology
 
-```
+```text
 ┌─────────────────────────────────────────┐
 │         Minikube Node (VM)              │
 │                                         │
@@ -243,6 +250,7 @@ resources:
 ## Commands Reference
 
 ### View Resources
+
 ```bash
 kubectl get all                    # All resources
 kubectl get pods -o wide          # Pods with IPs
@@ -251,6 +259,7 @@ kubectl get deployments           # Deployments
 ```
 
 ### Describe Resources
+
 ```bash
 kubectl describe pod <name>       # Pod details
 kubectl describe svc frontend     # Service details
@@ -258,6 +267,7 @@ kubectl describe deploy backend   # Deployment details
 ```
 
 ### Logs
+
 ```bash
 kubectl logs <pod-name>           # Pod logs
 kubectl logs -f <pod-name>        # Follow logs
@@ -265,6 +275,7 @@ kubectl logs -l app=frontend      # All frontend pods
 ```
 
 ### Helm
+
 ```bash
 helm list                         # List releases
 helm status frontend              # Release status

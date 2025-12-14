@@ -4,18 +4,22 @@ import { prisma } from '@turbo-stack/database';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
+interface JwtPayload {
+  userId: string;
+}
+
 export interface AuthRequest extends Request {
   userId?: string;
-  user?: any;
+  user?: Awaited<ReturnType<typeof prisma.user.findUnique>>;
 }
 
 export const generateToken = (userId: string): string => {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
 };
 
-export const verifyToken = (token: string): any => {
+export const verifyToken = (token: string): JwtPayload | null => {
   try {
-    return jwt.verify(token, JWT_SECRET);
+    return jwt.verify(token, JWT_SECRET) as JwtPayload;
   } catch (error) {
     return null;
   }
