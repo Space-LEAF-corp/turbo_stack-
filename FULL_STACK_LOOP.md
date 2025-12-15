@@ -77,7 +77,7 @@ This guide walks you through testing the complete **Frontend → Backend → Dat
 
 6. **Visit the page**:
 
-   ```
+   ```text
    http://localhost:3000/hello
    ```
 
@@ -87,7 +87,7 @@ If you don't have Docker, you can still test frontend ↔ backend:
 
 1. **Visit the hello page**:
 
-   ```
+   ```text
    http://localhost:3000/hello
    ```
 
@@ -184,7 +184,7 @@ Now that the full loop is confirmed, you can:
 
 ## 📊 Architecture
 
-```
+```text
 ┌─────────────────┐
 │   Frontend      │  Next.js on :3000
 │   /hello page   │  → Fetches from backend
