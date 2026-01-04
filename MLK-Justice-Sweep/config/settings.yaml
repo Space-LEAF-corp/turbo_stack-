@@ -1,0 +1,22 @@
+mode: daily  # options: daily, mlk_sweep
+
+log_sources:
+  - /var/log/auth.log
+  - /var/log/syslog
+
+time_window_minutes: 60  # for daily runs; MLK sweep can override
+
+integrity_vault:
+  path: ./vault/integrity_log.jsonl
+  enable_satellite_anchor: true
+
+turbo_satellite:
+  endpoint: "https://turbo-stack-krystal-core.example/api/anchor"
+  api_key_env_var: "TURBO_SATELLITE_API_KEY"
+
+jarvondis:
+  output_path: ./vault/jarvondis_stream.jsonl
+
+scheduling:
+  infinity_loop_forward_seconds: 0.2
+  infinity_loop_reverse_seconds: 0.25
