@@ -7,6 +7,7 @@
 ## ✨ What's Included
 
 **Authentication System** - Ready out of the box:
+
 - ✅ User signup & login with bcrypt password hashing
 - ✅ Secure credential validation
 - ✅ Clean REST API endpoints
@@ -14,6 +15,7 @@
 - ✅ Easy to extend with JWT, OAuth, 2FA
 
 **Modern Tech Stack**:
+
 - **Frontend**: Next.js 14 (App Router) with TypeScript & Tailwind CSS
 - **Backend**: Express.js API with TypeScript
 - **Database**: Prisma ORM (PostgreSQL/MySQL ready)
@@ -31,7 +33,7 @@
 
 ## 📁 Project Structure
 
-```
+```bash
 turbo_stack-/
 ├── apps/
 │   ├── web/          # Next.js frontend application
@@ -41,11 +43,11 @@ turbo_stack-/
 ├── package.json      # Root package.json with workspaces
 ├── turbo.json        # Turborepo configuration
 └── docker-compose.yml # Docker services (PostgreSQL, Redis)
-```
 
 ## ⚡ Quick Start (2 minutes)
 
 ### Prerequisites
+
 - Node.js 18+
 - pnpm (install: `npm install -g pnpm`)
 
@@ -62,7 +64,7 @@ pnpm dev --filter backend    # API on :3001
 pnpm dev --filter frontend   # Web on :3000
 ```
 
-**That's it!** Visit http://localhost:3000 and create an account.
+**That's it!** Visit <http://localhost:3000> and create an account.
 
 ### Optional: Full Database Setup
 
@@ -75,6 +77,7 @@ pnpm db:setup
 ## 🎨 Customization Guide
 
 ### Add Your Branding
+
 ```bash
 # Update apps/web/src/app/page.tsx
 # Change "Turbo Stack" to your product name
@@ -82,6 +85,7 @@ pnpm db:setup
 ```
 
 ### Extend Authentication
+
 ```typescript
 // apps/api/src/routes/auth.ts
 
@@ -96,6 +100,7 @@ const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
 ```
 
 ### Connect a Database
+
 ```bash
 # Update apps/api/src/routes/auth.ts
 # Replace in-memory users array with Prisma:
@@ -111,11 +116,11 @@ const user = await prisma.user.create({
 ## 🏗️ Architecture Highlights
 
 **Monorepo Structure** - Shared code, independent deploys:
-```
+
+```bash
 apps/web      → Frontend (Vercel/Netlify ready)
 apps/api      → Backend (Railway/Render ready)
 packages/db   → Shared database schemas
-```
 
 **Type Safety** - End-to-end TypeScript
 **Code Sharing** - Reuse types, utilities, configs
@@ -125,18 +130,21 @@ packages/db   → Shared database schemas
 ## 📦 Database Management
 
 **Run migrations**:
+
 ```bash
 cd packages/database
 npx prisma migrate dev --name your_migration_name
 ```
 
 **Open Prisma Studio** (database GUI):
+
 ```bash
 cd packages/database
 npx prisma studio
 ```
 
 **Generate Prisma Client**:
+
 ```bash
 cd packages/database
 npx prisma generate
@@ -145,22 +153,26 @@ npx prisma generate
 ## 🚀 Deployment Options
 
 ### Option 1: Vercel + Railway (Fastest)
+
 - **Frontend** → Vercel (connect GitHub, auto-deploy)
 - **Backend** → Railway (one-click PostgreSQL)
 - **Time to deploy**: ~5 minutes
 
 ### Option 2: Docker Containers
+
 ```bash
 docker-compose up -d  # PostgreSQL + Redis + Apps
 ```
 
 ### Option 3: Kubernetes (Enterprise)
+
 ```bash
 ./install-k8s-tools.sh  # Install minikube, helm
 ./deploy-minikube.sh    # Deploy with Helm charts
 ```
 
 **Helm Features:**
+
 - 🎭 High availability (2+ replicas)
 - 📊 Health checks & monitoring
 - 🔄 Auto-scaling ready
@@ -177,6 +189,7 @@ docker-compose up -d  # PostgreSQL + Redis + Apps
 **GitHub**: Click "Use this template" button above
 
 **Or clone directly:**
+
 ```bash
 git clone https://github.com/Space-LEAF-corp/turbo_stack-.git my-app
 cd my-app
@@ -191,6 +204,7 @@ pnpm install
 This template showcases production-ready architecture. Need custom development?
 
 **We deliver:**
+
 - ✅ Secure authentication & authorization systems
 - ✅ Scalable full-stack applications
 - ✅ Cloud-native deployments (AWS, GCP, Azure)
