@@ -5,17 +5,20 @@ This guide walks you through testing the complete **Frontend → Backend → Dat
 ## ✅ What's Implemented
 
 ### 1. Frontend (`/hello` page)
-- **Location**: `apps/web/src/pages/hello.tsx`
-- **Route**: http://localhost:3000/hello
+
+- **Location**: `apps/web/src/app/hello/page.tsx`
+- **Route**: <http://localhost:3000/hello>
 - **Features**:
   - Displays "Captain's Log Online"
   - Shows status of frontend, backend, and database connections
   - Fetches and displays latest log entry from database
 
 ### 2. Backend API (`/api/hello` endpoint)
+
 - **Location**: `apps/api/src/index.ts`
-- **Route**: http://localhost:3001/api/hello
+- **Route**: <http://localhost:3001/api/hello>
 - **Response**:
+
   ```json
   {
     "message": "Backend alive",
@@ -26,6 +29,7 @@ This guide walks you through testing the complete **Frontend → Backend → Dat
   ```
 
 ### 3. Database (Prisma + PostgreSQL)
+
 - **Model**: `LogEntry` in `packages/database/prisma/schema.prisma`
 - **Fields**:
   - `id`: Unique identifier
@@ -39,35 +43,41 @@ This guide walks you through testing the complete **Frontend → Backend → Dat
 ### Option 1: With Docker (Full Database)
 
 1. **Install Docker Desktop** (if not already installed)
-   - Download from: https://www.docker.com/products/docker-desktop
+   - Download from: <https://www.docker.com/products/docker-desktop>
 
 2. **Start PostgreSQL**:
+
    ```bash
    docker-compose up -d
    ```
 
 3. **Setup Database**:
+
    ```bash
    pnpm db:setup
    ```
+
    This will:
    - Generate Prisma client
    - Push schema to database
    - Seed with sample data
 
 4. **Install dependencies with database package**:
+
    ```bash
    pnpm install
    ```
 
 5. **Restart backend** to connect to database:
+
    ```bash
    # Stop current backend (Ctrl+C)
    pnpm dev --filter backend
    ```
 
 6. **Visit the page**:
-   ```
+
+   ```text
    http://localhost:3000/hello
    ```
 
@@ -76,7 +86,8 @@ This guide walks you through testing the complete **Frontend → Backend → Dat
 If you don't have Docker, you can still test frontend ↔ backend:
 
 1. **Visit the hello page**:
-   ```
+
+   ```text
    http://localhost:3000/hello
    ```
 
@@ -87,12 +98,14 @@ If you don't have Docker, you can still test frontend ↔ backend:
 
 ## 🧪 Testing the Full Loop
 
-### Test Backend Directly:
+### Test Backend Directly
+
 ```bash
 curl http://localhost:3001/api/hello
 ```
 
 Expected response (with database):
+
 ```json
 {
   "message": "Backend alive",
@@ -109,10 +122,12 @@ Expected response (with database):
 }
 ```
 
-### View in Browser:
-Navigate to: http://localhost:3000/hello
+### View in Browser
+
+Navigate to: <http://localhost:3000/hello>
 
 You should see:
+
 - 🚀 **Captain's Log Online** (big animated title)
 - ✅ **Frontend**: Next.js page loaded
 - ✅ **Backend**: Backend alive
@@ -141,16 +156,19 @@ pnpm db:setup
 ## 🐛 Troubleshooting
 
 ### Backend can't connect to database?
+
 - Make sure Docker is running: `docker ps`
 - Check docker-compose is up: `docker-compose ps`
 - Verify DATABASE_URL in `packages/database/.env`
 
 ### Port already in use?
+
 - Frontend (3000): Stop other Next.js instances
 - Backend (3001): Stop other Node.js servers
 - Database (5432): Stop other PostgreSQL instances
 
 ### CORS errors?
+
 - Backend has CORS enabled for all origins in development
 - Make sure backend is running on port 3001
 
@@ -166,7 +184,7 @@ Now that the full loop is confirmed, you can:
 
 ## 📊 Architecture
 
-```
+```text
 ┌─────────────────┐
 │   Frontend      │  Next.js on :3000
 │   /hello page   │  → Fetches from backend

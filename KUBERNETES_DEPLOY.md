@@ -5,6 +5,7 @@ Deploy your Turbo Stack full-stack application to Kubernetes using Helm charts a
 ## 📋 Prerequisites
 
 ### 1. Install Minikube
+
 ```bash
 # macOS
 brew install minikube
@@ -15,6 +16,7 @@ sudo install minikube-darwin-amd64 /usr/local/bin/minikube
 ```
 
 ### 2. Install Helm
+
 ```bash
 # macOS
 brew install helm
@@ -24,6 +26,7 @@ curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
 
 ### 3. Install kubectl (if not already installed)
+
 ```bash
 # macOS
 brew install kubectl
@@ -44,6 +47,7 @@ chmod +x deploy-minikube.sh
 ```
 
 This will:
+
 1. ✅ Start Minikube
 2. 🐳 Build Docker images
 3. ⚓ Deploy with Helm
@@ -136,6 +140,7 @@ minikube dashboard --url
 ```
 
 The dashboard shows:
+
 - 🎭 Pod status and health
 - 📈 Resource usage (CPU/Memory)
 - 🔄 Deployment scaling
@@ -205,7 +210,7 @@ kubectl port-forward service/backend 3001:3001
 
 ## 🎨 Helm Chart Structure
 
-```
+```text
 helm/
 ├── frontend/
 │   ├── Chart.yaml              # Chart metadata
@@ -290,10 +295,10 @@ minikube delete --all --purge
 
 After deployment, your services are exposed on NodePorts:
 
-- **Frontend**: http://localhost:30000 (via `minikube service frontend`)
-- **Backend**: http://localhost:30001 (via `minikube service backend`)
+- **Frontend**: <http://localhost:30000> (via `minikube service frontend`)
+- **Backend**: <http://localhost:30001> (via `minikube service backend`)
 
-### Get URLs automatically:
+### Get URLs automatically
 
 ```bash
 echo "Frontend: $(minikube service frontend --url)"
