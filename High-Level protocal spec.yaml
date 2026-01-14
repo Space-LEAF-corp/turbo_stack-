@@ -1,0 +1,74 @@
+protocol: KrystalSatSMS
+version: 1.0.0
+
+crypto:
+  identity_keys:
+    type: X25519 + Ed25519
+    storage: device_secure_hardware_only
+  session_keys:
+    type: double_ratchet
+    ciphers:
+      - name: AES-256-GCM
+      - name: ChaCha20-Poly1305
+  forward_secrecy: true
+  post_compromise_security: true
+
+metadata_policy:
+  store:
+    - ephemeral_routing_id
+    - coarse_timestamp  # e.g., 5–15 min buckets
+    - region_bucket     # e.g., country/large area only
+  never_store:
+    - plaintext_message
+    - phone_numbers_in_clear
+    - precise_gps
+  retention:
+    routing: "until_delivery_confirmed"
+    logs: "aggregated_only, no raw per-user logs"
+
+geo_fence_firewall:
+  engine: KrystalCore
+  rules:
+    - id: "GF-001"
+      description: "Block send outside allowed regions"
+      condition: "device.location not_in allowed_regions"
+      action: "block_send"
+    - id: "GF-002"
+      description: "Restricted mode near sensitive zones"
+      condition: "device.location in restricted_regions"
+      action: "restrict_features"
+  telemetry:
+    content_aware: false
+    behavior_only: true
+
+sponging_policy:
+  device:
+    storage: "encrypted_db_per_conversation"
+    auto_delete_default: "7d"
+    auto_delete_overrides:
+      - conversation_type: "high_sensitivity"
+        ttl: "24h"
+    secure_delete: "crypto_shred_keys"
+  server:
+    message_queue:
+      retention: "until_delivery_or_48h_max"
+      on_delivery: "delete_ciphertext_and_metadata"
+    threat_logs:
+      content: "anonymized_features_only"
+      access: "multi_party_approval + immutable_audit_log"
+
+threat_detection:
+  signals:
+    - name: "impossible_travel"
+      source: "coarse_location_history"
+    - name: "abnormal_rate"
+      source: "message_volume_per_time_bucket"
+    - name: "auth_failures"
+      source: "key_verification_events"
+  thresholds:
+    soft_flag:
+      min_signals: 1
+      action: "local_warning_only"
+    hard_flag:
+      min_signals: 2
+      action: "server_side_anonymized_record"
